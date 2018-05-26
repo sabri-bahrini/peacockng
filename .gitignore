@@ -36,3 +36,6 @@ docs/*
 
 # Playground tmp files
 .playground
+
+# package-lock
+package-lock.json
