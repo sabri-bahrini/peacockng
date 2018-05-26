@@ -1,0 +1,51 @@
+$table-primary: black;
+
+.pe-basic-table {
+  width: 100%;
+  .pe-table {
+    width: 100%;
+    .pe-table-btn {
+      margin-left: 5px;
+    }
+
+    .sort-icon {
+      color: blue;
+      float: right;
+    }
+  }
+
+  .pe-table-emty {
+    text-align: center;
+  }
+
+  .pe-table-pagination {
+    text-align: center;
+  }
+  .pe-table-total {
+    text-align: center;
+    font-size: 16px;
+    border-top: 1px solid $table-primary;
+    padding-top: 5px;
+  }
+}
+
+
+//filtered table
+.pe-filtered-table{
+  .pe-filter{
+
+  }
+
+  .pe-body{
+
+  }
+
+  .pe-option{
+    text-align: right;
+  }
+
+  .collapse-pointer{
+    cursor: pointer;
+  }
+
+}

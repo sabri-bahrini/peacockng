@@ -1,0 +1,27 @@
+<pe-modal [(visible)]="visible"
+          [modalTitle]="modalTitle"
+          [styleClass]="styleClass"
+          [closable]="closable">
+
+  <div modal-body>
+    <ng-content select="[modal-body]"></ng-content>
+  </div>
+
+  <div modal-footer>
+    <div class="modal-footer">
+      <button type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              (click)="actionClick('CANCEL')">
+        {{ cancelLabel }}
+      </button>
+      <button type="button"
+              class="btn btn-primary"
+              (click)="actionClick('CONFIRM')">
+        {{ confirmLabel }}
+      </button>
+    </div>
+  </div>
+
+
+</pe-modal>

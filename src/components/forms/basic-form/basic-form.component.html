@@ -1,0 +1,116 @@
+<form [formGroup]="formGroup" novalidate #basicForm="ngForm">
+
+  <div class="row pe-form" [ngClass]="config.classStyle">
+
+    <!--begin form group-->
+    <div class="form-group"
+         *ngFor="let field of config.fields"
+         [ngClass]="(field.classStyle)? field.classStyle : 'col-md-12' ">
+
+      <!--title format-->
+      <span *ngIf="isTitleType(field.type)" class="pe-title col-md-12"> {{field.label}}</span>
+
+      <!--label for the different forms (showed when the field is not a title)-->
+      <label *ngIf="!isTitleType(field.type)" [for]="field.name">{{field.label}}</label>
+
+      <!-- *************** input text is by default ************-->
+      <input *ngIf="isSimpleInputType(field.type)"
+             [type]="(field.type) ? field.type : 'text'"
+             class="form-control"
+             [id]="field.name"
+             [name]="field.name"
+             [(ngModel)]="data[field.name]"
+             [placeholder]="(field.placeholder)?field.placeholder : ''"
+             [formControlName]="field.name"
+             [ngClass]="(isInvalid(field.name, basicForm)) ? 'is-invalid' : ''"
+             [maxlength]="field.maxLength">
+
+      <!-- ************** select type **********-->
+      <select *ngIf="isSelectType(field.type)"
+              class="form-control"
+              [(ngModel)]="data[field.name]"
+              [id]="field.name"
+              [name]="field.name"
+              [formControlName]="field.name"
+              [ngClass]="(isInvalid(field.name, basicForm)) ? 'is-invalid' : ''">
+        <!--option list-->
+        <option *ngFor="let item of field.values"
+                [value]="item.value">
+          {{item.label}}
+        </option>
+      </select>
+
+      <!--  radio  -->
+      <div *ngIf="isInputGroup(field.type) && field.type.indexOf('radio') > -1">
+        <div class="form-check" *ngFor="let item of field.values; let index = index">
+          <input class="form-check-input"
+                 type="radio"
+                 [name]="field.name"
+                 [id]="field.name + '-' + index"
+                 [value]="item.value"
+                 [(ngModel)]="data[field.name]"
+                 [formControlName]="field.name"
+                 [ngClass]="(isInvalid(field.name, basicForm)) ? 'is-invalid' : ''">
+          <label class="form-check-label" [for]="field.name + '-' + index">
+            {{item.label}}
+          </label>
+        </div>
+      </div>
+
+      <!--  checkbox  -->
+      <div *ngIf="isInputGroup(field.type) && field.type.indexOf('checkbox') > -1">
+        <div class="form-check" *ngFor="let item of field.values; let index = index">
+          <input class="form-check-input"
+                 type="checkbox"
+                 [name]="field.name + '-' + index"
+                 [id]="field.name + '-' + index"
+                 [value]="item.value"
+                 [(ngModel)]="data[field.name][item.value]"
+                 [formControlName]="field.name"
+                 [ngClass]="(isInvalid(field.name, basicForm)) ? 'is-invalid' : ''">
+          <label class="form-check-label" [for]="field.name + '-' + index">
+            {{item.label}}
+          </label>
+        </div>
+      </div>
+
+      <!--textarea-->
+      <textarea *ngIf="field.type.indexOf('textarea') > -1"
+                class="form-control"
+                [(ngModel)]="data[field.name]"
+                [id]="field.name"
+                [name]="field.name"
+                [rows]="(field.rows) ? field.rows : '4'"
+                [formControlName]="field.name"
+                [ngClass]="(isInvalid(field.name, basicForm)) ? 'is-invalid' : ''"></textarea>
+
+      <!--begin error zone-->
+      <div class="invalid-feedback">
+        Looks good!
+      </div>
+      <!--end error zone-->
+
+    </div>
+    <!--end form group-->
+
+  </div>
+
+  <!--(change)="radioGroupChange(field, item.value, index)"-->
+  <!--[checked]="item.checked"-->
+
+  <!--action button for form-->
+  <div class="row pe-btn">
+    <button *ngFor="let action of config.actions"
+            [type]="(isFormButton(action.type)) ? action.type : 'button'"
+            class="pe-btn"
+            (click)="(isFormButton(action.type)) ? eventEmit(action.eventName, basicForm) : eventEmit(action.eventName)"
+            [ngClass]="action.classStyle">
+      <!--button icon-->
+      <i [ngClass]="action.icon"></i>
+      <!--button label -->
+      {{ action.label }}
+    </button>
+  </div>
+
+</form>
+

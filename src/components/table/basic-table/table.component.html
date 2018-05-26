@@ -1,0 +1,76 @@
+<div class="pe-basic-table" *ngIf="data.length > 0">
+  <div class="row">
+    <div class="col-md-2 offset-md-10" *ngIf="pagination">
+      <div class="form-group">
+        <label for="itemPerPage">{{showItemPerPageLabel}}</label>
+        <select [(ngModel)]="itemsPerPage"
+                class="form-control"
+                id="itemPerPage">
+          <option *ngFor="let perPage of arrayItemsPerPage">{{perPage}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <!--table -->
+  <div class="col-md-12">
+    <table class="pe-table" [ngClass]="class">
+      <thead>
+      <tr>
+        <th *ngFor="let col of cols" (click)="sort(col.field)" [ngClass]="col.classStyle">
+          {{ col.header }}
+          <span class="sort-icon"
+                [ngClass]="(col.sort == 'desc' || col.sort == 'asc')? ((col.sort == 'desc')? 'fa fa-angle-double-up' : 'fa fa-angle-double-down') : ''"></span>
+        </th>
+        <th *ngIf="actionCol" [ngClass]="actionCol.classStyle">
+          {{ actionCol.header }}
+        </th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let row of data | paginate: { id: 'pe-table',
+                                                        itemsPerPage: itemsPerPage,
+                                                        currentPage: currentPage,
+                                                        totalItems: totalItems }">
+        <td *ngFor="let col of cols">
+          {{ getColData(row, col.field)}}
+        </td>
+        <td *ngIf="actionCol && actionCol.actions.length > 0">
+        <span *ngFor="let action of actionCol.actions">
+          <!--action buton-->
+           <button type="button"
+                   class="pe-table-btn"
+                   *ngIf="isShowed(row, action.when)"
+                   (click)="actionClick(row, action.eventName)"
+                   [ngClass]="action.classStyle">
+            <!--button icon-->
+             <i [ngClass]="action.icon"></i>
+             <!--button label -->
+            {{ action.label }}
+          </button>
+        </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--pagination-->
+  <div class="row">
+    <div class="col-md-8 offset-md-1 pe-table-pagination" *ngIf="pagination">
+      <pagination-controls id="pe-table"
+                           (pageChange)="pageChanged($event) ;"
+                           maxSize="7"
+                           directionLinks="true"
+                           [previousLabel]="previousLabel"
+                           [nextLabel]="nextLabel">
+      </pagination-controls>
+    </div>
+    <div class="col-md-2 pe-table-total">
+      {{ totalLabel }} {{ totalItems }}
+    </div>
+  </div>
+
+</div>
+<div class="col-md-12 pe-basic-table pe-table-emty" *ngIf="data.length <= 0">
+  {{emptyDataLabel}}
+</div>

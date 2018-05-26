@@ -1,0 +1,11 @@
+<div class="pe-modal"
+     *ngIf="fullPage"
+     [ngClass]="(visible) ? 'active' : ''">
+  <div class="pe-modal-content">
+    <div class="loader"><span [ngClass]="loadingIcon"></span> {{loadingLabel}}</div>
+  </div>
+</div>
+
+<div class="loader" *ngIf="fullPage != 'true' && visible">
+  <span [ngClass]="loadingIcon"></span> {{loadingLabel}}
+</div>

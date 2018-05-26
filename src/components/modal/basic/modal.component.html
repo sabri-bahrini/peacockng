@@ -1,0 +1,32 @@
+<div class="pe-modal"
+     [ngClass]="[(visible) ? 'active' : '', styleClass ]">
+  <div class="pe-modal-content">
+
+
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!--modal header-->
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLiveLabel">{{modalTitle}}</h5>
+          <!--header container-->
+          <ng-content select="[modal-header]"></ng-content>
+          <!--header close button-->
+          <button type="button" *ngIf="closable" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="pe-close" (click)="closeModal()">&times;</span>
+          </button>
+        </div>
+
+        <!--modal body contents-->
+        <div class="modal-body">
+          <!--modal body container-->
+          <ng-content select="[modal-body]"></ng-content>
+        </div>
+
+        <!--modal footer container-->
+        <ng-content select="[modal-footer]"></ng-content>
+
+      </div>
+    </div>
+
+  </div>
+</div>

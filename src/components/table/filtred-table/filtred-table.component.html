@@ -1,0 +1,50 @@
+<div class="pe-filtered-table">
+  <div class="pe-filter card" *ngIf="isEnableFilter">
+    <div class="card-header collapse-pointer" (click)="hideAndShowFilter()">
+      <strong>{{filterCardLabel}}</strong>
+      <span class="pull-right" *ngIf="showFiler"><i class="fa fa-angle-down"></i></span>
+      <span class="pull-right" *ngIf="!showFiler"><i class="fa fa-angle-left"></i></span>
+    </div>
+    <div class="card-body" *ngIf="showFiler">
+      <pe-form [(data)]="formData"
+               (formClicked)="formChange($event)"
+               [config]="searchConfig"></pe-form>
+    </div>
+  </div>
+
+  <div class="pe-body card">
+    <div class="card-header">
+      <strong>{{tableCardLabel}}</strong>
+    </div>
+    <div class="card-body">
+      <div class="pe-option row">
+        <div class="col-md-12">
+          <div class="pull-right" *ngFor="let btn of btnCols.reverse()">
+            <button type="button"
+                    class="pe-btn ml-1"
+                    (click)="clickedBtn(btn.eventName)"
+                    [ngClass]="btn.classStyle">
+              <!--button icon-->
+              <i [ngClass]="btn.icon"></i>
+              <!--button label -->
+              {{ btn.label }}
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+      <pe-table [data]="data"
+                [cols]="cols"
+                [actionCol]="actionCol"
+                (event)="clicked($event)"
+                [itemsPerPage]="itemsPerPage"
+                [arrayItemsPerPage]="arrayItemsPerPage"
+                [previousLabel]="previousLabel"
+                [nextLabel]="nextLabel"
+                [showItemPerPageLabel]="showItemPerPageLabel"
+                [emptyDataLabel]="emptyDataLabel"></pe-table>
+    </div>
+  </div>
+</div>
+
