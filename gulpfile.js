@@ -6,6 +6,7 @@ var gulp = require('gulp'),
   rename = require('gulp-rename'),
   fs = require('fs-extra'),
   runSequence = require('run-sequence'),
+  sass = require('gulp-sass'),
   inlineResources = require('./tools/gulp/inline-resources');
 
 const rootFolder = path.join(__dirname);
@@ -120,7 +121,7 @@ gulp.task('rollup:umd', function () {
         // The name to use for the module for UMD/IIFE bundles
         // (required for bundles with exports)
         // See "name" in https://rollupjs.org/#core-functionality
-        name: 'peacockng',
+        name: 'components',
 
         // See "globals" in https://rollupjs.org/#core-functionality
         globals: {
@@ -137,7 +138,7 @@ gulp.task('rollup:umd', function () {
       }
 
     }))
-    .pipe(rename('peacockng.umd.js'))
+    .pipe(rename('components.umd.js'))
     .pipe(gulp.dest(distFolder));
 });
 
@@ -181,6 +182,12 @@ gulp.task('clean:build', function () {
   return deleteFolder(buildFolder);
 });
 
+gulp.task('styles', function() {
+  gulp.src('src/scss/style.scss')
+      .pipe(sass().on('error', sass.logError))
+      .pipe(gulp.dest('./dist/css/'))
+});
+
 gulp.task('compile', function () {
   runSequence(
     'clean:dist',
@@ -194,6 +201,7 @@ gulp.task('compile', function () {
     'copy:readme',
     'clean:build',
     'clean:tmp',
+    'styles',
     function (err) {
       if (err) {
         console.log('ERROR:', err.message);

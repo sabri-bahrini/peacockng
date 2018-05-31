@@ -27,7 +27,7 @@
       // other libraries
       rxjs: 'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
-      'peacockng': '../dist'
+      '@peacockng/components': '../dist'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -45,8 +45,8 @@
       rxjs: {
         defaultExtension: 'js'
       },
-      'peacockng': {
-        main: 'peacockng.umd.js',
+      '@peacockng/components': {
+        main: 'components.umd.js',
         defaultExtension: 'js'
       }
     }

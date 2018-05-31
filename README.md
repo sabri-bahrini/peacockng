@@ -1,22 +1,25 @@
-# peacockng
+# @peacockng/components
 
 ## Installation
 
 To install this library, run:
 
 ```bash
-$ npm install peacockng --save
+$ npm install bootstrap@4.1.1 --save
+$ npm install ngx-pagination@3.1.1 --save
 ```
-
-## Consuming your library
-
-Once you have published your library to npm, you can import your library in any Angular application by running:
 
 ```bash
-$ npm install peacockng
+$ npm install @peacockng/components --save
 ```
 
-and then from your Angular `AppModule`:
+## Consuming
+
+Once you have installed the library, you can import your library in any Angular application:
+
+
+
+In your Angular `AppModule`:
 
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
@@ -25,7 +28,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 // Import your library
-import { SampleModule } from 'peacockng';
+import { LoaderModule } from '@peacockng/components';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,7 @@ import { SampleModule } from 'peacockng';
     BrowserModule,
 
     // Specify your library as an import
-    LibraryModule
+    LoaderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -50,7 +53,8 @@ Once your library is imported, you can use its components, directives and pipes 
 <h1>
   {{title}}
 </h1>
-<sampleComponent></sampleComponent>
+<pe-basic-loader [visible]="true"
+                 [loadingLabel]="'LOADING'"></pe-basic-loader>
 ```
 
 ## Development

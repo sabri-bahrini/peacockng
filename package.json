@@ -1,11 +1,11 @@
 {
-  "name": "peacockng",
-  "version": "0.1.0",
+  "name": "@peacockng/components",
+  "version": "0.1.1",
   "scripts": {
     "build": "gulp build",
     "build:watch": "gulp",
     "docs": "npm run docs:build",
-    "docs:build": "compodoc -p tsconfig.json -n peacockng -d docs --hideGenerator",
+    "docs:build": "compodoc -p tsconfig.json -n @peacockng/components -d docs --hideGenerator",
     "docs:serve": "npm run docs:build -- -s",
     "docs:watch": "npm run docs:build -- -s -w",
     "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
@@ -30,10 +30,12 @@
     "url": "https://github.com/sabri-bahrini/peacockng/issues"
   },
   "devDependencies": {
+    "@angular/animations": "^5.0.0",
     "@angular/common": "^5.0.0",
     "@angular/compiler": "^5.0.0",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/core": "^5.0.0",
+    "@angular/forms": "^5.0.0",
     "@angular/platform-browser": "^5.0.0",
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@compodoc/compodoc": "^1.0.0-beta.10",
@@ -47,6 +49,7 @@
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
     "gulp-rollup": "^2.15.0",
+    "gulp-sass": "^4.0.1",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
@@ -56,6 +59,7 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "lite-server": "^2.3.0",
+    "ngx-pagination": "^3.1.1",
     "node-sass": "^4.5.2",
     "node-sass-tilde-importer": "^1.0.0",
     "node-watch": "^0.5.2",
