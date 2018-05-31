@@ -118,8 +118,6 @@ $ npm link sample-library
 $ ng serve --preserve-symlinks
 ```
 To make sure the consuming application searches for the peer dependencies in the application's node_modules directory.
-To make sure the consuming application searches for the peer dependencies in the application's node_modules directory.
-
 
 
 ## License
