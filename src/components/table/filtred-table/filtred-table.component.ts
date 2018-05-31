@@ -176,16 +176,16 @@ export class FilteredTableComponent implements OnInit {
     this.searchConfig = {
       actions: [
         {
-          label: this.searchLabel,
-          eventName: 'SEARCH',
-          icon: 'fa fa-search',
-          classStyle: 'btn btn-outline-primary col-md-3 offset-md-3 mr-1',
-        },
-        {
           label: this.resetLabel,
           eventName: 'RESET',
           icon: 'fa fa-ban',
-          classStyle: 'btn btn-outline-warning col-md-3',
+          classStyle: 'btn btn-outline-warning col-md-3 offset-md-3 mr-1',
+        },
+        {
+          label: this.searchLabel,
+          eventName: 'SEARCH',
+          icon: 'fa fa-search',
+          classStyle: 'btn btn-outline-primary col-md-3',
         }
       ],
       fields: []

@@ -56,8 +56,9 @@
   </div>
   <!--pagination-->
   <div class="row">
-    <div class="col-md-8 offset-md-1 pe-table-pagination" *ngIf="pagination">
-      <pagination-controls id="pe-table"
+    <div class="col-md-8 offset-md-1 pe-table-pagination">
+      <pagination-controls *ngIf="pagination"
+                           id="pe-table"
                            (pageChange)="pageChanged($event) ;"
                            maxSize="7"
                            directionLinks="true"

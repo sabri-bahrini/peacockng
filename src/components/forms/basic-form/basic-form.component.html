@@ -86,7 +86,9 @@
 
       <!--begin error zone-->
       <div class="invalid-feedback">
-        Looks good!
+       <div *ngFor="let itemControl of field.validators">
+         <span *ngIf="controlTest(field.name, itemControl.control, basicForm)"> {{itemControl.msg}}</span>
+       </div>
       </div>
       <!--end error zone-->
 

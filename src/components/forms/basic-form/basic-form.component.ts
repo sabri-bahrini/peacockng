@@ -165,6 +165,8 @@ export class BasicFormComponent implements OnInit {
           return true;
         case 'tel':
           return true;
+        case 'date':
+          return true;
         default:
           return false;
       }
@@ -235,6 +237,24 @@ export class BasicFormComponent implements OnInit {
    */
   isInvalid(fieldName, ngForm?: NgForm) {
     return this.formGroup.controls[fieldName].invalid && (this.formGroup.controls[fieldName].touched || (ngForm && ngForm.submitted));
+  }
+
+  /**
+   * check if the field is Invalid or not and test controls
+   *      - true : field (name) is invalid controls
+   *      - false : by default
+   * @param fieldName
+   * @param controlName
+   * @param {NgForm} ngForm
+   * @return {boolean}
+   */
+  controlTest(fieldName, controlName, ngForm: NgForm) {
+    switch (controlName.toLowerCase()) {
+      case 'required':
+        return this.isInvalid(fieldName, ngForm) && this.formGroup.controls[fieldName].errors.required;
+      default:
+        return false;
+    }
   }
 
 }
