@@ -113,13 +113,12 @@ $ npm link sample-library
 
 6- Import modules and `consuming`
 
+
 7- Run the server
 ```bash
 $ ng serve --preserve-symlinks
 ```
 To make sure the consuming application searches for the peer dependencies in the application's node_modules directory.
-To make sure the consuming application searches for the peer dependencies in the application's node_modules directory.
-
 
 
 ## License
