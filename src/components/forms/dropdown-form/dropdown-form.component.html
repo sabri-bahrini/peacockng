@@ -1,0 +1,49 @@
+<!--(blur)="closeDropdown()" tabindex="0"-->
+<div class="pe-dropdown"
+     (blur)="onTouched(); (!filtered)?closeDropdown() : ''" [tabindex]="(!filtered)? '0' : 'none'">
+  {{ngClass}}
+  <div class="dropdown"
+       [ngClass]="dropdownActive ? 'active' : ''"
+       (click)="openCloseDropdown()">
+    <span class="selLabel" *ngIf="multiple">{{(multiple && selectedItems.length > 0) ?  _tmpPlaceholder.length+' '+selectedItemLabel : placeholder}}</span>
+    <span class="selLabel"
+          *ngIf="!multiple">{{(selectedItems.length > 0)? selectedItems[0].option.label : placeholder}}</span>
+  </div>
+  <div class="dropdown-list"
+       [id]="'list-'+randomId"
+       [ngClass]="dropdownActive ? 'active' : ''">
+    <div class="filter" *ngIf="filtered">
+      <input type="text"
+             [id]="'input_filter-'+randomId"
+             (blur)="closeDropdown()"
+             [placeholder]="filterLabel"
+             [(ngModel)]="filter">
+      <!--<span class="search-icon"></span>-->
+      <img class="search-icon"
+           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACU0lEQVR4Xu2aQYQbYRTHm24vw1CGEkpPpaRKqysrp63ULlWWkFMP1bKn6mHppedeeiqp9lSih0q1tpftqbo6WkJsNbosuYZlWUroKZRIfyWHz5+kk0wyj/UNP8+7PPnlveebmSQ3HA5PnYTrNJwUES/iRbyIF/EiXsSLnJlGIJfLlQgbUIYrEEAfDiCGj9CaVoDbpGxEECgQarAGegVQHPEYdmELOtajpRJVwp5ITGIN9qBqKaISFcI2hCLQhVcj6nAoMiFsQ8VqR3ScGiKwDw+Y6ZYI/wtleAEFR6gBy9Cx7EgNAif/ACuOhBLDMnyS/amZjRbdWJWdOIJNJP6IgNKHu9CTnVm16sgdye8j8TthzV+wpfVMROQbPEBid8q6b6UrZh254CTtGeoOoCX1shVhP0JZ8t6MtXuy9GHWHenDwMnPzSgSSYf6mYqwDwNCN+V8L0FJDtCBxY58d+ebcStPKVKBSOtZiNQlf4ZMkFDiLDzVeiYijFdMaDoiV+EdMmECiR246Eg0Iba8RXkE7km+AT+QuT1Gogo/QXcqgvyiRSa++6UD9wivx5zeLTiG81CSnVA6cBOOx0zAQkRU5iGhBkuQ4hIZEVn4gxWiLwnrsJ9Q4NuYQ7QAXyCf6Y7o8sM1klvwHNrOhz2EJjyBFbgB61nLpPl9RB+slOvwGaJJY5bBaKWm/Z/OfJXOpBcxkrkkMulFrGUYzfx8ROxlduYjYi9TpCtRehF7mTecV73UIkYyR6P8PWzO5QWdkcxliKA7p3st/4cBL+JFvIgX8SJe5C+JA7GR8loW+wAAAABJRU5ErkJggg==">
+    </div>
+    <ul>
+      <li *ngFor="let opt of dropdownOptions | dropdownFilter: filter; let optIndex = index">
+        <span [ngClass]="opt.selected? 'selected' : ''"
+              (click)="selectItem(opt)">
+          {{opt.option.label}}
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="multiple">
+    <div class="selected-item" *ngFor="let item of selectedItems">
+      <div class="label">
+        {{item.option.label}}
+      </div>
+      <div class="remove" (click)="removeItem(item)">
+        <img
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAVpJREFUSInt1j9LXEEUhvHfZncDEkh2o42VJEHyp7XJB0gR0UawEsTGRoKFhWAbSFJKOguDjWUg6QQhlVrYCRYW1qIWkiiKEIKuxdywc6/L7l0WBGEfmOIdzpn3zjBnziUfA/iJS5xhBdU8iQ9yxDzGBop4j3G8wVrO/BQPUcmMeeyjN5p7LuxmrEF8udHCRSzjH2odjr9YRAFKicEkhjGEw3a3neEZ1rGFH/8NXmMbux0uDifYw0vqO/iFOXzCQYcGr/AWsyTnlDCBaeHWdMJvfBVu2d0zg++R7lc/RkJxPYp0D/oivYN38YLZQnkiXaGbGIn0EhYi/QGrmQ+oNDPIUpIunFb6Fm2Xert0DboG99DgWvppOMdppC/wp4ku4aqZ4ajQ1J9GCTFF6Re4kMwR+nQNgzIBMSWhE5XxEUdJUjMKeIEvwts11SJeFd+Eo8nbh4/xWfhpSHEDERlM24tKI6sAAAAASUVORK5CYII="
+          alt="">
+      </div>
+    </div>
+  </div>
+
+</div>
+

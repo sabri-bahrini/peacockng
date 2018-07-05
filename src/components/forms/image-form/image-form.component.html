@@ -1,0 +1,13 @@
+<div class="pe-image-form" [ngClass]="classStyle">
+  <label for="filePicker" *ngIf="uploadLabel">{{uploadLabel}}</label><br>
+  <input type="file" id="filePicker" name="filePicker"
+         (change)="handleFileSelect($event)" [(ngModel)]="datatest"
+         [accept]="accept">
+  <!--begin error zone-->
+  <div class="invalid">
+    <div *ngIf="isMaxSize">
+      <span> {{maxSizeLabel}} {{maxSize / 1048576}} Mo</span>
+    </div>
+  </div>
+</div>
+

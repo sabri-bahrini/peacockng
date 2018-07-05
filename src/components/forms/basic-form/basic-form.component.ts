@@ -50,7 +50,6 @@ export class BasicFormComponent implements OnInit {
   }
 
   set data(value) {
-    console.log('my value is :', value)
     this.formObject = value;
     this.dataChange.emit(this.formObject);
     // INIT argument if is not defined object
@@ -110,6 +109,12 @@ export class BasicFormComponent implements OnInit {
           case 'required':
             validators.push(Validators.required);
             break;
+          case 'min':
+            validators.push(Validators.min(val.value));
+            break;
+          case 'max':
+            validators.push(Validators.max(val.value));
+            break;
           default:
             break;
         }
@@ -161,8 +166,6 @@ export class BasicFormComponent implements OnInit {
           return true;
         case 'email':
           return true;
-        case 'number':
-          return true;
         case 'tel':
           return true;
         case 'date':
@@ -172,6 +175,20 @@ export class BasicFormComponent implements OnInit {
       }
     } else {
       return true;
+    }
+  }
+
+  /**
+   * Xheck if the fiels is an input type number
+   * @param fieldType
+   * @return {boolean}
+   */
+  isNumberInput(fieldType) {
+    switch (fieldType.toLowerCase()) {
+      case 'number':
+        return true;
+      default:
+        return false;
     }
   }
 
@@ -229,6 +246,78 @@ export class BasicFormComponent implements OnInit {
   }
 
   /**
+   * check if the field type is an image
+   * @param fieldType
+   * @returns {boolean}
+   */
+  isImage(fieldType) {
+    switch (fieldType.toLowerCase()) {
+      case 'image' || 'img':
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * check if the field type is an image
+   * @param fieldType
+   * @returns {boolean}
+   */
+  isTable(fieldType) {
+    switch (fieldType.type.toLowerCase()) {
+      case 'table':
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * check if the field is a dropdown type or not
+   * @param fieldType
+   * @return {boolean}
+   */
+  isDropdownType(field) {
+    switch (field.type.toLowerCase()) {
+      case 'dropdown':
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * check if the fiels is a switch type
+   * @param field
+   * @return {boolean}
+   */
+  isSwitchType(field) {
+    switch (field.type.toLowerCase()) {
+      case 'switch':
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * Check if the field type is standard type or custom
+   * @param field
+   * @return {boolean}
+   */
+  isStandardType(field) {
+    switch (field) {
+      case this.isDropdownType(field):
+        return false;
+      case this.isSwitchType(field):
+        return false;
+      default:
+        return true;
+    }
+  }
+
+  /**
    * check if the field name is invalid or not
    * when the field touched or the form submitted
    *    - true : form Invalid
@@ -252,6 +341,10 @@ export class BasicFormComponent implements OnInit {
     switch (controlName.toLowerCase()) {
       case 'required':
         return this.isInvalid(fieldName, ngForm) && this.formGroup.controls[fieldName].errors.required;
+      case 'min':
+        return this.isInvalid(fieldName, ngForm) && this.formGroup.controls[fieldName].errors.min;
+      case 'max':
+        return this.isInvalid(fieldName, ngForm) && this.formGroup.controls[fieldName].errors.max;
       default:
         return false;
     }

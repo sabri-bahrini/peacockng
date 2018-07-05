@@ -1,0 +1,140 @@
+.pe-dropdown {
+  &:focus {
+    outline: none;
+  }
+  /* dropdown list */
+  .dropdown {
+    width: 100%;
+    padding: 0.375rem 0rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #3e515b;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c2cfd6;
+    border-radius: 0;
+  }
+  .dropdown.active .selLabel:after {
+    content: '\25B2';
+  }
+
+  .dropdown > span {
+    width: 100%;
+    min-height: 20px;
+    color: black;
+    display: block;
+    padding: 0 50px 0 30px;
+    position: relative;
+    //z-index: 9999;
+    cursor: pointer;
+  }
+  .dropdown > span:after {
+    content: '\25BC';
+    position: absolute;
+    right: 0px;
+    width: 50px;
+    text-align: center;
+    font-size: 12px;
+    border-left: 1px solid #ddd;
+  }
+  .dropdown > span:active {
+    -webkit-transform: rotateX(45deg);
+    transform: rotateX(45deg);
+  }
+  .dropdown > span:active:after {
+    content: '\25B2';
+  }
+  .dropdown-list {
+    position: absolute;
+    border: 1px solid #c2cfd6;
+    //top: 0px;
+    width: 93%;
+    display: none;
+    //active dropdownList
+    &.active {
+      //top: 35px;
+      display: block;
+      padding-left: 0;
+      background: white;
+      z-index: 1;
+    }
+
+    //filter search
+    .filter {
+      padding: 5px;
+      position: relative;
+      input {
+        width: 100%;
+      }
+
+      .search-icon {
+        position: absolute;
+        width: 30px;
+        margin-top: -30px;
+        right: 0;
+      }
+    }
+    ul {
+      overflow: auto;
+      max-height: 200px;
+      padding: 0;
+      li {
+        display: block;
+        list-style: none;
+        left: 0;
+        width: 100%;
+
+        span {
+          //box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+          //letter-spacing: 2px;
+          //font-size: 18px;
+          //line-height: 60px;
+          width: 100%;
+          padding: 0 30px;
+          display: block;
+          color: black;
+          cursor: pointer;
+        }
+
+        span:hover {
+          background: #428bca;
+          color: white;
+        }
+
+        span.selected {
+          background: #c7c7c7;
+          color: black;
+        }
+
+      }
+    }
+
+  }
+
+  .selected-item {
+    background: white;
+    display: inline-block;
+    margin: 5px;
+    padding: 7px;
+    border-radius: 20px;
+
+    .label {
+      display: inline-block;
+    }
+    .remove {
+      cursor: pointer;
+      display: inline-block;
+      width: 20px;
+      img {
+        width: 15px;
+      }
+    }
+  }
+}
+
+.invalid {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 14px;
+  color: #f86c6b;
+}
