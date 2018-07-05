@@ -12,7 +12,7 @@
     </div>
   </div>
   <!--table -->
-  <div class="col-md-12">
+  <div class="col-md-12 scroll-x">
     <table class="pe-table" [ngClass]="class">
       <thead>
       <tr>
@@ -33,9 +33,11 @@
                                                         currentPage: currentPage,
                                                         totalItems: totalItems }">
         <td *ngFor="let col of cols">
-          {{ getColData(row, col.field)}}
+          <div *ngIf="col.date">{{ getColData(row, col.field) | date: col.date}}</div>
+          <div *ngIf="col.number">{{getColData(row, col.field) | number : '1.3-3'}}</div>
+          <div *ngIf="!col.date && !col.translated && !col.number">{{getColData(row, col.field) }}</div>
         </td>
-        <td *ngIf="actionCol && actionCol.actions.length > 0">
+        <td class="action-col" *ngIf="actionCol && actionCol.actions.length > 0">
         <span *ngFor="let action of actionCol.actions">
           <!--action buton-->
            <button type="button"
