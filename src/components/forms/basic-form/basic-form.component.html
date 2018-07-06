@@ -11,7 +11,7 @@
       <span *ngIf="isTitleType(field.type)" class="pe-title col-md-12"> {{field.label}}</span>
 
       <!--label for the different forms (showed when the field is not a title)-->
-      <label *ngIf="!isTitleType(field.type)" [for]="field.name">{{field.label}}</label>
+      <label *ngIf="!isTitleType(field.type) && !isTable(field)" [for]="field.name">{{field.label}}</label>
 
       <!-- *************** input text is by default ************-->
       <input *ngIf="isSimpleInputType(field.type)"
@@ -25,6 +25,18 @@
              [ngClass]="(isInvalid(field.name, basicForm)) ? 'is-invalid' : ''"
              [maxlength]="field.maxLength">
 
+      <!-- *************** input text is by default ************-->
+      <input *ngIf="isNumberInput(field.type)"
+             type="number"
+             class="form-control"
+             [id]="field.name"
+             [name]="field.name"
+             [(ngModel)]="data[field.name]"
+             [placeholder]="(field.placeholder)?field.placeholder : ''"
+             [formControlName]="field.name"
+             [ngClass]="(isInvalid(field.name, basicForm)) ? 'is-invalid' : ''"
+             [max]="field.max"
+             [min]="field.min">
       <!-- ************** select type **********-->
       <select *ngIf="isSelectType(field.type)"
               class="form-control"
@@ -84,11 +96,62 @@
                 [formControlName]="field.name"
                 [ngClass]="(isInvalid(field.name, basicForm)) ? 'is-invalid' : ''"></textarea>
 
+      <!--upload image file-->
+      <div *ngIf="isImage(field.type)">
+        <img [src]="data[field.name]" alt="" width="100px">
+        <pe-image-form [(data)]="data[field.name]"
+                       [maxSize]="field.maxSize"
+                       [maxSizeLabel]="field.maxSizeLabel"
+                       accept="image/*"
+        ></pe-image-form>
+      </div>
+
+      <!--upload image file-->
+      <div *ngIf="isTable(field)">
+        <pe-form-table [(data)]="data[field.name]"
+                       [config]="field.config"
+                       [previousLabel]="field.previousLabel?field.previousLabel:'Previous'"
+                       [nextLabel]="field.nextLabel?field.nextLabel:'Next'"
+                       [itemsPerPage]="field.itemsPerPage?field.itemsPerPage:'10'"
+                       [addLabel]="field.addLabel?field.addLabel:'Add'"
+                       [deleteLabel]="field.deleteLabel?field.deleteLabel:'Delete'"
+                       [updateLabel]="field.updateLabel?field.updateLabel:'Update'"
+                       [emptyDataLabel]="field.emptyDataLabel?field.emptyDataLabel:'No data available'"
+                       [addModalTitle]="field.addModalTitle?field.addModalTitle:'Add IP'"
+                       [updateModalTitle]="field.updateModalTitle?field.updateModalTitle:'Update IP'"
+                       [deleteModalTitle]="field.deleteModalTitle?field.deleteModalTitle:'Delete IP'"
+                       [deleteModalMessage]="field.deleteModalMessage?field.deleteModalMessage:'Delete selected element?'"
+                       [modalSaveButton]="field.modalSaveButton?field.modalSaveButton:'Save'"
+                       [modalCancelButton]="field.modalCancelButton?field.modalCancelButton:'Cancel'"
+                       [modalDeleteButton]="field.modalDeleteButton?field.modalDeleteButton:'Delete'"
+                       [cardLabel]="field.cardLabel?field.cardLabel:'Authorized IPs'"
+                       [showItemPerPageLabel]="(field.showItemPerPageLabel)?field.showItemPerPageLabel:''"
+        ></pe-form-table>
+      </div>
+
+
+      <pe-dropdown *ngIf="isDropdownType(field)"
+                   [options]="field.values"
+                   [placeholder]="field.placeholderText"
+                   [(ngModel)]="data[field.name]"
+                   [multiple]="field.multiple"
+                   [filtered]="field.filtred"
+                   [formControlName]="field.name"
+                   [selectedItemLabel]="field.selectedLabel"></pe-dropdown>
+
+      <pe-switch *ngIf="isSwitchType(field)"
+                 [(ngModel)]="data[field.name]"
+                 [formControlName]="field.name"
+                 [onLabel]="(field.onLabel)? field.onLabel : 'ON'"
+                 [offLabel]="(field.offLabel)? field.offLabel : 'OFF'"
+                 [inputLabel]="(field.inputLabel)? field.inputLabel : ''"></pe-switch>
+
+
       <!--begin error zone-->
-      <div class="invalid-feedback">
-       <div *ngFor="let itemControl of field.validators">
-         <span *ngIf="controlTest(field.name, itemControl.control, basicForm)"> {{itemControl.msg}}</span>
-       </div>
+      <div [ngClass]="(isStandardType(field))? 'invalid-feedback' : 'invalid'" >
+        <div *ngFor="let itemControl of field.validators">
+          <span *ngIf="controlTest(field.name, itemControl.control, basicForm)"> {{itemControl.msg}}</span>
+        </div>
       </div>
       <!--end error zone-->
 
@@ -99,6 +162,7 @@
 
   <!--(change)="radioGroupChange(field, item.value, index)"-->
   <!--[checked]="item.checked"-->
+  <ng-content select="[custom-html]"></ng-content>
 
   <!--action button for form-->
   <div class="row pe-btn">

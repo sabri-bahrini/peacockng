@@ -1,0 +1,14 @@
+<div class="pe-input-switch">
+  <div class="label" *ngIf="inputLabel">
+    {{inputLabel}}
+  </div>
+
+  <label class="switch">
+    <input type="checkbox" [(ngModel)]="switchValue" [name]="randomId" [id]="randomId"/>
+    <div class="switch-zone">
+      <span class="on">{{onLabel}}</span>
+      <span class="off">{{offLabel}}</span>
+    </div>
+    <i class="circle"></i>
+  </label>
+</div>

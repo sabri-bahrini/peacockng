@@ -87,7 +87,6 @@ export class BasicTableComponent implements OnInit {
     this._pagination = pagination;
     if (!pagination) {
       this.itemsPerPage = this.data.length;
-      console.log(this.data.length);
     }
   }
 
@@ -180,9 +179,9 @@ export class BasicTableComponent implements OnInit {
       for (let i of colField.split('.')) {
         itm = itm[i];
       }
-      return itm;
+      return itm.toString();
     } else {
-      return row[colField];
+      return row[colField].toString();
     }
   }
 
@@ -192,24 +191,35 @@ export class BasicTableComponent implements OnInit {
    *    fasle : if not
    *  If the condition don't have a operator by default is "=="
    * @param row
-   * @param condition { field: 'theFieldName', value: 'the Value to be checked', operator: '==' }
+   * @param conditions [{ paramValue: 'the value to will be compared', value: 'the Value to be checked', operator: '==' }, { field: 'theFieldName', value: 'the Value to be checked', operator: '==' }]
    * @return {boolean}
    */
-  isShowed(row, condition) {
-    if (condition) {
-      if (!condition.operator) {
-        condition.operator = '==';
-      }
-      let x = '\'' + this.getColData(row, condition.field) + '\'' + condition.operator + '\'' + condition.value + '\'';
-      return eval(x);
-      // switch (condition.operator) {
-      //   case '==':
-      //     return this.getColData(row, condition.field) == condition.value;
-      //   case '!=':
-      //     return this.getColData(row, condition.field) != condition.value;
-      //   default:
-      //     return this.getColData(row, condition.field) == condition.value;
-      // }
+  isShowed(row, conditions) {
+    if (conditions) {
+      let conditionToEvaluate = '';
+      for (let i = 0; i < conditions.length; i++) {
+        // if the condition dont have an opearator
+        if (!conditions[i].operator) {
+          conditions[i].operator = '==';
+        }
+        // add and opeartor if you have multiple condition
+        if (i > 0) {
+          conditionToEvaluate += ' && ';
+        }
+
+        let data;
+        // if is a field of the object
+        if (conditions[i].field) {
+          data = this.getColData(row, conditions[i].field);
+        }
+        // if is a simple condition (from out value)
+        if (conditions[i].paramValue) {
+          data = conditions[i].paramValue;
+        }
+        conditionToEvaluate += '\'' + data + '\'' + conditions[i].operator + '\'' + conditions[i].value + '\'';
+          }
+      return eval(conditionToEvaluate);
+
     } else {
       return true;
     }

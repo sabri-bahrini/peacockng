@@ -1,0 +1,62 @@
+<div class="pick-list">
+  <div class="listbox" >
+    <form *ngIf="filter" class="filter">
+      <input class="form-control" name="filterSource" [(ngModel)]="available.picker" (ngModelChange)="onFilter(available)">
+    </form>
+    <div class="record-picker">
+      <ul [ngStyle]="{'max-height': height, 'min-height': height}" [ngClass]="{over:available.dragOver}" (drop)="drop($event, confirmed)"
+        (dragover)="allowDrop($event, available)" (dragleave)="dragLeave()">
+        <li *ngFor="let item of available.sift; let idx=index;" (click)="disabled ? null : selectItem(available.pick, item); shiftClick($event, idx, available, item)"
+          [ngClass]="{selected: isItemSelected(available.pick, item), disabled: disabled}" [draggable]="!disabled && draggable"
+          (dragstart)="drag($event, item, available)" (dragend)="dragEnd(available)">
+          <label>{{item._name}}</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="btn-action">
+	<button type="button" *ngIf="addAllLabel"
+	name="addAllBtn"
+	class="btn btn-primary btn-block"
+	(click)="moveAllItem(available, confirmed)"
+	[disabled]="available.list.length === 0">{{addAllLabel}} <i class="fa fa-angle-double-right"></i></button>
+
+	<button type="button" *ngIf="addLabel"
+	name="addBtn"
+	class="btn btn-primary btn-block"
+	(click)="moveItem(available, confirmed)"
+	[disabled]="available.pick.length === 0">{{addLabel}} <i class="fa fa-angle-right"></i></button>
+
+	<button type="button" *ngIf="removeLabel"
+	 name="removeBtn"
+	 class="btn btn-primary btn-block"
+	 (click)="moveItem(confirmed, available)"
+	  [disabled]="confirmed.pick.length === 0"><i class="fa fa-angle-left"></i> {{removeLabel}}</button>
+
+	<button type="button" *ngIf="removeAllLabel"
+	name ="removeAllBtn"
+	class="btn btn-primary btn-block"
+	(click)="moveAllItem(confirmed, available)"
+	[disabled]="confirmed.list.length === 0"><i class="fa fa-angle-double-left"></i> {{removeAllLabel}}</button>
+
+  </div>
+
+  <div class="listbox">
+    <form *ngIf="filter" class="filter">
+      <input class="form-control" name="filterDestination" [(ngModel)]="confirmed.picker" (ngModelChange)="onFilter(confirmed)">
+    </form>
+    <div class="record-picker">
+      <ul [ngStyle]="{'max-height': height, 'min-height': height}" [ngClass]="{over:confirmed.dragOver}" (drop)="drop($event, available)"
+        (dragover)="allowDrop($event, confirmed)" (dragleave)="dragLeave()">
+        <li #itmConf *ngFor="let item of confirmed.sift; let idx=index;" (click)="disabled ? null : selectItem(confirmed.pick, item); shiftClick($event, idx, confirmed, item)"
+          [ngClass]="{selected: isItemSelected(confirmed.pick, item), disabled: disabled}" [draggable]="!disabled && draggable"
+          (dragstart)="drag($event, item, confirmed)" (dragend)="dragEnd(confirmed)">
+          <label>{{item._name}}</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+

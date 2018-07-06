@@ -1,6 +1,8 @@
 /**
 * Peacock Ng Style
  */
+@import "globale";
+
 //modal styles
 @import "components/modal";
 
@@ -11,3 +13,7 @@
 @import "components/loader/loader";
 //table style
 @import "components/table";
+// Dropdowns Style
+@import "components/dropdown";
+// inputSwitch
+@import "components/inputSwitch";
