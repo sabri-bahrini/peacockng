@@ -4,7 +4,6 @@ import {BasicFormComponent} from './basic-form/basic-form.component';
 import {ImageFormComponent} from './image-form/image-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FormTableComponent} from '../forms/form-table/form-table.component';
-import {TranslateModule} from '@ngx-translate/core';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ModalModule} from '../modal/modal.module';
 import {DropdownFormComponent} from './dropdown-form/dropdown-form.component';
@@ -17,7 +16,6 @@ import {InputSwitchComponent} from './inputswitch/inputswitch.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule,
     NgxPaginationModule,
     ModalModule
   ],
