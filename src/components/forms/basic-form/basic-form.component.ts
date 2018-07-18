@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'pe-form',
@@ -114,6 +114,12 @@ export class BasicFormComponent implements OnInit {
             break;
           case 'max':
             validators.push(Validators.max(val.value));
+            break;
+          case 'minlength':
+            validators.push(Validators.minLength(val.value));
+            break;
+          case 'maxlength':
+            validators.push(Validators.maxLength(val.value));
             break;
           default:
             break;
@@ -345,6 +351,10 @@ export class BasicFormComponent implements OnInit {
         return this.isInvalid(fieldName, ngForm) && this.formGroup.controls[fieldName].errors.min;
       case 'max':
         return this.isInvalid(fieldName, ngForm) && this.formGroup.controls[fieldName].errors.max;
+      case 'minlength':
+        return this.isInvalid(fieldName, ngForm) && this.formGroup.controls[fieldName].errors.minlength;
+      case 'maxlength':
+        return this.isInvalid(fieldName, ngForm) && this.formGroup.controls[fieldName].errors.maxlength;
       default:
         return false;
     }
