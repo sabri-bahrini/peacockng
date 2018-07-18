@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'pe-form-table',
@@ -454,43 +454,38 @@ export class FormTableComponent implements OnInit {
    */
   addElement(event) {
     let _tmp = [];
-    switch (event.action) {
-      case 'cancel':
-        this.modalView = false;
-        this.initFromConfig();
-        break;
-      case 'SAVE':
-        _tmp.push(this.myForm);
-        this.data = _tmp.concat(this.data);
-        this.modalView = false;
-        this.initFromConfig();
-        break;
-      default:
-        return false;
+    if (event.formValid && event.action === 'SAVE') {
+      _tmp.push(this.myForm);
+      this.data = _tmp.concat(this.data);
+      this.modalView = false;
+      this.initFromConfig();
     }
+
+    if (event.action === 'RESET') {
+      this.modalView = false;
+    }
+
   }
+}
 
   /**
    * action for the update modal
    * @param event
    * @returns {boolean}
    */
-  updateElement(event) {
-    switch (event.action) {
-      case 'cancel':
-        this.data[this.row_index] = this._tmpTableRow;
-        this.initFromConfig();
-        this.modalUpdate = false;
-        this._tmpTableRow = {};
-        break;
-      case 'SAVE':
-        this.modalUpdate = false;
-        this.initFromConfig();
-        break;
-      default:
-        return false;
-    }
+updateElement(event) {
+  if (event.formValid && event.action === 'SAVE') {
+    this.modalUpdate = false;
+    this.initFromConfig();
   }
+
+  if (event.action === 'RESET') {
+    this.data[this.row_index] = this._tmpTableRow;
+    this.initFromConfig();
+    this.modalUpdate = false;
+    this._tmpTableRow = {};
+  }
+}
 
   /**
    * init the form config inside the model
@@ -502,8 +497,8 @@ export class FormTableComponent implements OnInit {
       actions: [
         {
           label: this.modalCancelButton,
-          type: 'CANCEL',
-          eventName: 'cancel',
+          type: 'RESET',
+          eventName: 'RESET',
           icon: 'fa fa-ban',
           classStyle: 'btn btn-warning col-md-3 offset-md-3 mr-1',
         },
