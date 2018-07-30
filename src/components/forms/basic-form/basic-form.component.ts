@@ -121,6 +121,9 @@ export class BasicFormComponent implements OnInit {
           case 'maxlength':
             validators.push(Validators.maxLength(val.value));
             break;
+          case 'pattern':
+            validators.push(Validators.pattern(val.value));
+            break;
           default:
             break;
         }
@@ -137,9 +140,9 @@ export class BasicFormComponent implements OnInit {
    */
   eventEmit(action, form?: NgForm) {
     if (form) {
-      this.formClicked.emit({data: this.data, action: action, formValid: form.valid});
+      this.formClicked.emit({ data: this.data, action: action, formValid: form.valid });
     } else {
-      this.formClicked.emit({data: this.data, action: action});
+      this.formClicked.emit({ data: this.data, action: action });
     }
   }
 
@@ -355,6 +358,8 @@ export class BasicFormComponent implements OnInit {
         return this.isInvalid(fieldName, ngForm) && this.formGroup.controls[fieldName].errors.minlength;
       case 'maxlength':
         return this.isInvalid(fieldName, ngForm) && this.formGroup.controls[fieldName].errors.maxlength;
+      case 'pattern':
+        return this.isInvalid(fieldName, ngForm) && this.formGroup.controls[fieldName].errors.pattern;
       default:
         return false;
     }
